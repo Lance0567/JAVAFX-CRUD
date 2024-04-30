@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -62,7 +63,44 @@ public class FXMLDocumentController implements Initializable {
     
     public void loginAccount(){
     
-//        String sql = ""
+        String sql = "SELECT username, password FROM admin WHERE username = ? and password = ?";
+        
+        connect = database.connect();
+        
+        try {
+            Alert alert;
+            if(si_username.getText().isEmpty() || si_password.getText().isEmpty()){
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill all the blank fields");
+                alert.showAndWait();
+            } else {
+                prepare = connect.prepareStatement(sql);
+                prepare.setString(1, si_username.getText());
+                prepare.setString(2, si_password.getText());
+
+                result = prepare.executeQuery();
+
+                if (result.next()) {
+                    // If correct username and password
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Successfully Login");
+                    alert.showAndWait();
+                } else {
+                    // If incorrect username or password
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Incorrect Username/Password");
+                    alert.showAndWait();
+                }
+                
+            }
+                                   
+        } catch (Exception e) {e.printStackTrace();}
     }
 
     
