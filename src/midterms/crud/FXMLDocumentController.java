@@ -4,6 +4,7 @@
  */
 package midterms.crud;
 
+import database.database;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -96,11 +97,74 @@ public class FXMLDocumentController implements Initializable {
                     alert.setHeaderText(null);
                     alert.setContentText("Incorrect Username/Password");
                     alert.showAndWait();
+                }                
+            }                                   
+        } catch (Exception e) {e.printStackTrace();}
+    }
+    
+    public void registerAccount(){
+    
+        String sql = "INSERT INTO admin (username, password) VALUES(?,?)";
+        
+        connect = database.connect();
+        
+        try {
+            Alert alert;
+            if(su_username.getText().isEmpty() || su_password.getText().isEmpty()){
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill all the blank fields");
+                alert.showAndWait();
+            } else {
+                // Check if Username is already taken
+                String checkData = "SELECT username FROM admin WHERE username = '"
+                        + su_username.getText() + "'";
+                
+                prepare = connect.prepareStatement(checkData);
+                result = prepare.executeQuery();
+                
+                if(result.next()){
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Please fill all the blank fields");
+                    alert.showAndWait();
                 }
                 
-            }
-                                   
+                if(su_username.getText().length() < 8){
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Invalid Password, atleast 8 characters needed");
+                    alert.showAndWait();
+                } else {
+                    prepare = connect.prepareStatement(sql);
+                    prepare.setString(1, su_username.getText());
+                    prepare.setString(2, su_password.getText());
+                    
+                    prepare.executeUpdate();
+                    
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Successfully created a new account!");
+                    alert.showAndWait();
+                }                
+            }            
         } catch (Exception e) {e.printStackTrace();}
+    }
+    
+    // switching of form
+    public void switchForm(ActionEvent event){
+    
+        if(event.getSource() == su_loginAccountBtn) {
+            login_form.setVisible(true);
+            signup_form.setVisible(false);
+        } else if(event.getSource() == si_createAccountBtn){
+            login_form.setVisible(false);
+            signup_form.setVisible(true);
+        }
     }
 
     

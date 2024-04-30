@@ -14,7 +14,7 @@
    <children>
       <BorderPane fx:id="login_form" prefHeight="200.0" prefWidth="200.0">
          <left>
-            <AnchorPane prefHeight="511.0" prefWidth="415.0" styleClass="other-form" stylesheets="@design.css" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="511.0" prefWidth="415.0" styleClass="other-form" stylesheets="@../../style/design.css" BorderPane.alignment="CENTER">
                <children>
                   <Label layoutX="77.0" layoutY="179.0" text="JAVAFX CRUD System" textFill="WHITE">
                      <font>
@@ -22,7 +22,7 @@
                      </font>
                   </Label>
                   <Label layoutX="148.0" layoutY="398.0" text="Register Account" textFill="WHITE" />
-                  <Button fx:id="si_createAccountBtn" layoutX="78.0" layoutY="438.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="245.0" styleClass="create-btn" stylesheets="@design.css" text="Create Account" />
+                  <Button fx:id="si_createAccountBtn" layoutX="78.0" layoutY="438.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="30.0" prefWidth="245.0" styleClass="create-btn" stylesheets="@../../style/design.css" text="Create Account" />
                </children></AnchorPane>
          </left>
          <right>
@@ -33,8 +33,8 @@
                   <TextField fx:id="si_username" layoutX="108.0" layoutY="181.0" prefHeight="35.0" prefWidth="223.0" promptText="Username" />
                   <PasswordField fx:id="si_password" layoutX="108.0" layoutY="228.0" prefHeight="35.0" prefWidth="223.0" promptText="Password" />
                   <FontAwesomeIconView glyphName="LOCK" layoutX="85.0" layoutY="254.0" size="2EM" />
-                  <Button fx:id="si_loginBtn" layoutX="145.0" layoutY="299.0" mnemonicParsing="false" onAction="#loginAccount" prefHeight="40.0" prefWidth="146.0" styleClass="other-form" stylesheets="@design.css" text="Login" />
-                  <Label layoutX="164.0" layoutY="100.0" styleClass="white-form" stylesheets="@design.css" text="Sign in Form" textFill="#d0a933">
+                  <Button fx:id="si_loginBtn" layoutX="145.0" layoutY="299.0" mnemonicParsing="false" onAction="#loginAccount" prefHeight="40.0" prefWidth="146.0" styleClass="other-form" stylesheets="@../../style/design.css" text="Login" />
+                  <Label layoutX="164.0" layoutY="100.0" styleClass="white-form" stylesheets="@../../style/design.css" text="Sign in Form" textFill="#d0a933">
                      <font>
                         <Font name="Tahoma" size="20.0" />
                      </font>
@@ -45,7 +45,7 @@
       </BorderPane>
       <BorderPane fx:id="signup_form" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" visible="false">
          <left>
-            <AnchorPane prefHeight="511.0" prefWidth="415.0" styleClass="other-form" stylesheets="@design.css" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="511.0" prefWidth="415.0" styleClass="other-form" stylesheets="@../../style/design.css" BorderPane.alignment="CENTER">
                <children>
                   <Label layoutX="77.0" layoutY="179.0" text="JAVAFX CRUD System" textFill="WHITE">
                      <font>
@@ -53,7 +53,7 @@
                      </font>
                   </Label>
                   <Label layoutX="123.0" layoutY="398.0" text="Already Have an Account" textFill="WHITE" />
-                  <Button fx:id="su_loginAccountBtn" layoutX="78.0" layoutY="438.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="245.0" styleClass="create-btn" stylesheets="@design.css" text="Login Account" />
+                  <Button fx:id="su_loginAccountBtn" layoutX="78.0" layoutY="438.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="30.0" prefWidth="245.0" styleClass="create-btn" stylesheets="@../../style/design.css" text="Login Account" />
                </children>
             </AnchorPane>
          </left>
@@ -65,8 +65,8 @@
                   <TextField fx:id="su_username" layoutX="108.0" layoutY="181.0" prefHeight="35.0" prefWidth="223.0" promptText="Username" />
                   <PasswordField fx:id="su_password" layoutX="108.0" layoutY="228.0" prefHeight="35.0" prefWidth="223.0" promptText="Password" />
                   <FontAwesomeIconView glyphName="LOCK" layoutX="85.0" layoutY="254.0" size="2EM" />
-                  <Button fx:id="su_signupBtn" layoutX="145.0" layoutY="299.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="146.0" styleClass="other-form" stylesheets="@design.css" text="Sign up" />
-                  <Label layoutX="165.0" layoutY="94.0" styleClass="white-form" stylesheets="@design.css" text="Sign up Form" textFill="#d0a933">
+                  <Button fx:id="su_signupBtn" layoutX="145.0" layoutY="299.0" mnemonicParsing="false" onAction="#registerAccount" prefHeight="40.0" prefWidth="146.0" styleClass="other-form" stylesheets="@../../style/design.css" text="Sign up" />
+                  <Label layoutX="165.0" layoutY="94.0" styleClass="white-form" stylesheets="@../../style/design.css" text="Sign up Form" textFill="#d0a933">
                      <font>
                         <Font name="Tahoma" size="20.0" />
                      </font>
