@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXML2.java to edit this template
  */
-package midterms.crud;
+package controller;
 
 import database.database;
 import java.net.URL;
@@ -109,6 +109,7 @@ public class FXMLDocumentController implements Initializable {
         connect = database.connect();
         
         try {
+            // Check if there is blank field
             Alert alert;
             if(su_username.getText().isEmpty() || su_password.getText().isEmpty()){
                 alert = new Alert(Alert.AlertType.ERROR);
@@ -128,34 +129,41 @@ public class FXMLDocumentController implements Initializable {
                     alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error Message");
                     alert.setHeaderText(null);
-                    alert.setContentText("Please fill all the blank fields");
-                    alert.showAndWait();
-                }
-                
-                if(su_username.getText().length() < 8){
-                    alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error Message");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Invalid Password, atleast 8 characters needed");
+                    alert.setContentText(su_username.getText() + " is already taken");
                     alert.showAndWait();
                 } else {
-                    prepare = connect.prepareStatement(sql);
-                    prepare.setString(1, su_username.getText());
-                    prepare.setString(2, su_password.getText());
-                    
-                    prepare.executeUpdate();
-                    
-                    alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error Message");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Successfully created a new account!");
-                    alert.showAndWait();
-                }                
+                    if (su_password.getText().length() < 8) {
+                        alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error Message");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Invalid Password, atleast 8 characters needed");
+                        alert.showAndWait();
+                    } else {
+                        prepare = connect.prepareStatement(sql);
+                        prepare.setString(1, su_username.getText());
+                        prepare.setString(2, su_password.getText());
+
+                        prepare.executeUpdate();
+
+                        alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Information Message");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Successfully created a new account!");
+                        alert.showAndWait();
+                        
+                        // after successful sign up switch to login form with blank fields
+                        login_form.setVisible(true);
+                        signup_form.setVisible(false);
+                        
+                        su_username.setText("");
+                        su_password.setText("");
+                    }
+                }                                               
             }            
         } catch (Exception e) {e.printStackTrace();}
     }
     
-    // switching of form
+    // Switching of form
     public void switchForm(ActionEvent event){
     
         if(event.getSource() == su_loginAccountBtn) {
