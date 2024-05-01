@@ -184,7 +184,7 @@ public class FXMLDocumentController implements Initializable {
         }
     }
     
-    // Switching of form
+    // Switching of form when button is click from the left side
     public void switchForm(ActionEvent event){
     
         if(event.getSource() == su_loginAccountBtn) {

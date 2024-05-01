@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -83,6 +84,62 @@ public class CRUDController implements Initializable {
     private ResultSet result;
     
     private Alert alert;
+    
+    public void studentAddBtn(){
+                       
+        connect = database.connect();
+        
+        try {
+            
+            if(crud_studentNumber.getText().isEmpty()
+                    || crud_fullName.getText().isEmpty()
+                    || crud_year.getSelectionModel().getSelectedItem() == null
+                    || crud_course.getSelectionModel().getSelectedItem() == null
+                    || crud_gender.getSelectionModel().getSelectedItem() == null){
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill all the blank fields");
+                alert.showAndWait();
+            } else {
+                String checkData = "SELECT student_number FROM student_info WHERE student_number = "
+                        + crud_studentNumber.getText();
+
+                prepare = connect.prepareStatement(checkData);
+                result = prepare.executeQuery();
+
+                if (result.next()) {
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Student Number: " + crud_studentNumber.getText() + " is already taken");
+                    alert.showAndWait();
+                } else {
+                    String insertData = "INSERT INTO student_info (student_number, full_name, year, course, gender, date)"
+                            + " VALUES(?,?,?,?,?,?)";
+                    prepare = connect.prepareStatement(insertData);
+                    prepare.setString(1, crud_studentNumber.getText());
+                    prepare.setString(2, crud_fullName.getText());
+                    prepare.setString(3, (String) crud_year.getSelectionModel().getSelectedItem());
+                    prepare.setString(4, (String) crud_course.getSelectionModel().getSelectedItem());
+                    prepare.setString(5, (String) crud_gender.getSelectionModel().getSelectedItem());
+                    
+                    Date date = new Date();
+                    java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+                    
+                    prepare.setString(6, String.valueOf(sqlDate));
+                    
+                    prepare.executeUpdate();
+                    
+                    // To update the tableView
+                    studentShowData();
+                }
+            }                                                
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     
     // Arraylist for year dropdown option for the UI
     private String[] yearList = {"1st Year", "2nd Year", "3rd Year", "4th Year", "5th Year", "6th Year"};

@@ -56,7 +56,7 @@
                                  </font>
                               </Label>
                               <ComboBox fx:id="crud_gender" layoutX="15.0" layoutY="344.0" prefHeight="35.0" prefWidth="291.0" promptText="Choose..." />
-                              <Button fx:id="crud_addBtn" layoutX="35.0" layoutY="413.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="108.0" styleClass="btn" stylesheets="@../style/CrudDesign.css" text="Add" AnchorPane.bottomAnchor="117.0" AnchorPane.leftAnchor="35.0" />
+                              <Button fx:id="crud_addBtn" layoutX="35.0" layoutY="413.0" mnemonicParsing="false" onAction="#studentAddBtn" prefHeight="38.0" prefWidth="108.0" styleClass="btn" stylesheets="@../style/CrudDesign.css" text="Add" AnchorPane.bottomAnchor="117.0" AnchorPane.leftAnchor="35.0" />
                               <Button fx:id="crud_updateBtn" layoutX="163.0" layoutY="412.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="108.0" styleClass="btn" stylesheets="@../style/CrudDesign.css" text="Upload" AnchorPane.bottomAnchor="118.0" AnchorPane.leftAnchor="163.0" />
                               <ComboBox fx:id="crud_course" layoutX="13.0" layoutY="272.0" prefHeight="35.0" prefWidth="291.0" promptText="Choose..." />
                               <Button fx:id="crud_deleteBtn" layoutX="164.0" layoutY="466.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="108.0" styleClass="btn" stylesheets="@../style/CrudDesign.css" text="Delete" AnchorPane.bottomAnchor="64.0" AnchorPane.leftAnchor="164.0" />
