@@ -14,6 +14,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,6 +22,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -129,16 +131,137 @@ public class CRUDController implements Initializable {
                     
                     prepare.setString(6, String.valueOf(sqlDate));
                     
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Error Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Successfully added!");
+                    alert.showAndWait();
+                    
                     prepare.executeUpdate();
                     
                     // To update the tableView
                     studentShowData();
+                    // To clear all fields
+                    studentClearBtn();
                 }
             }                                                
             
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    public void studentUpdateBtn(){
+        
+        connect = database.connect();
+
+        try {
+
+            if (crud_studentNumber.getText().isEmpty()){       
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill all the blank fields");
+                alert.showAndWait();
+            } else {
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Are you sure you want to Update Student Number: "
+                        + crud_studentNumber.getText() + "?");
+                Optional<ButtonType> option = alert.showAndWait();
+                
+                if(option.get().equals(ButtonType.OK)){                
+                    String updateData = "UPDATE student_info SET "
+                            + "full_name = '" + crud_fullName.getText()
+                            + "', year = '" + crud_year.getSelectionModel().getSelectedItem()
+                            + "', course = '" + crud_course.getSelectionModel().getSelectedItem()
+                            + "', gender = '" + crud_gender.getSelectionModel().getSelectedItem()
+                            + "' WHERE student_number = " + crud_studentNumber.getText();
+
+                    prepare = connect.prepareStatement(updateData);
+                    prepare.executeUpdate();
+                    
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Successfully Updated!");
+                    alert.showAndWait();   
+
+                    // To update the tableView
+                    studentShowData();
+                    // To clear all fields
+                    studentClearBtn();
+                } else {
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Cancelled.");
+                    alert.showAndWait();                    
+                }                                
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void studentDeleteBtn(){
+        connect = database.connect();
+
+        try {
+
+            if (crud_studentNumber.getText().isEmpty()){       
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill all the blank fields");
+                alert.showAndWait();
+            } else {
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Are you sure you want to Delete Student Number: "
+                        + crud_studentNumber.getText() + "?");
+                Optional<ButtonType> option = alert.showAndWait();
+                
+                if(option.get().equals(ButtonType.OK)){                
+                    String deleteData = "DELETE FROM student_info WHERE student_number = "
+                            + crud_studentNumber.getText();
+
+                    prepare = connect.prepareStatement(deleteData);
+                    prepare.executeUpdate();
+                    
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Successfully Deleted!");
+                    alert.showAndWait();   
+
+                    // To update the tableView
+                    studentShowData();
+                    // To clear all fields
+                    studentClearBtn();
+                } else {
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Cancelled.");
+                    alert.showAndWait();                    
+                }                                
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void studentClearBtn(){
+        crud_studentNumber.setText("");
+        crud_fullName.setText("");
+        crud_year.getSelectionModel().clearSelection();
+        crud_course.getSelectionModel().clearSelection();
+        crud_gender.getSelectionModel().clearSelection();
     }
     
     // Arraylist for year dropdown option for the UI
@@ -235,11 +358,13 @@ public class CRUDController implements Initializable {
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        
+        // show the drop downlist
         studentYearList();
         studentCourseList();
         studentGenderList();
         
+        // show the data in the table
+        studentShowData();
     }
     
 }
