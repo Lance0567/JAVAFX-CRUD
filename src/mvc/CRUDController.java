@@ -100,27 +100,27 @@ public class CRUDController implements Initializable {
     // Arraylist for year dropdown option for the UI
     private String[] courseList = {"BSIT", "BSCS", "BSCpE", "BSCE"};
     public void studentCourseList() {
-        List<String> yList = new ArrayList<>();
+        List<String> cList = new ArrayList<>();
         
-        for(String data: yearList){
-            yList.add(data);
+        for(String data: courseList){
+            cList.add(data);
         }
         
-        ObservableList listData = FXCollections.observableArrayList(yList);
-        crud_year.setItems(listData);
+        ObservableList listData = FXCollections.observableArrayList(cList);
+        crud_course.setItems(listData);
     }
     
     // Arraylist for year dropdown option for the UI
     private String[] genderList = {"Male", "Female", "Others"};
     public void studentGenderList() {
-        List<String> yList = new ArrayList<>();
+        List<String> gList = new ArrayList<>();
         
-        for(String data: yearList){
-            yList.add(data);
+        for(String data: genderList){
+            gList.add(data);
         }
         
-        ObservableList listData = FXCollections.observableArrayList(yList);
-        crud_year.setItems(listData);
+        ObservableList listData = FXCollections.observableArrayList(gList);
+        crud_gender.setItems(listData);
     }
     
     public ObservableList<studentData> studentListData(){
@@ -178,7 +178,11 @@ public class CRUDController implements Initializable {
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        studentYearList();
+        studentCourseList();
+        studentGenderList();
+        
     }
     
 }
